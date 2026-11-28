@@ -1,191 +1,715 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tuburu Sivakumar | Full Stack Web Developer</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-<style>
-:root{
-  --ink:#1e1b3a; --muted:#5b5f77; --bg:#fbfaff; --line:#e6e3f5;
-  --indigo:#4f46e5; --violet:#7c3aed; --pink:#ec4899; --orange:#f97316; --teal:#0d9488; --blue:#0ea5e9; --green:#16a34a;
-}
-*{box-sizing:border-box;margin:0}
-html{scroll-behavior:smooth}
-body{font-family:'DM Sans',system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65}
-h1,h2,h3{font-family:'Sora',system-ui,sans-serif;line-height:1.2}
-a{color:inherit}
-:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
-.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#efe8dc">
+  <title>Tuburu Sivakumar | Full Stack Web Developer</title>
+  <meta name="description" content="Portfolio of Tuburu Sivakumar, Frontend and Full Stack Web Developer.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,600;6..96,800&family=DM+Sans:wght@400;500;600;700&family=Italiana&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #f3f0e8;
+      --paper-2: #e8e5da;
+      --ink: #171713;
+      --red: #be4a35;
+      --olive: #71806a;
+      --blue: #1f4e79;
+      --gold: #a78b5b;
+      --line: rgba(23,23,19,.14);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: "DM Sans", sans-serif;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: .28;
+      background-image:
+        repeating-radial-gradient(circle at 20% 30%, rgba(23,23,19,.09) 0 1px, transparent 1px 5px),
+        linear-gradient(90deg, transparent 49.8%, rgba(23,23,19,.025) 50%, transparent 50.2%);
+      background-size: 11px 11px, 17px 17px;
+    }
+    a { color: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    :focus-visible { outline: 2px solid var(--red); outline-offset: 5px; }
 
-/* top bar */
-nav{position:sticky;top:0;z-index:5;background:rgba(251,250,255,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-nav .wrap{display:flex;justify-content:space-between;align-items:center;height:56px}
-nav b{font-family:'Sora',sans-serif}
-nav ul{display:flex;gap:22px;list-style:none;padding:0;font-size:.92rem}
-nav a{text-decoration:none;color:var(--muted)} nav a:hover{color:var(--indigo)}
+    .inkspot {
+      position: fixed;
+      z-index: 40;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      background: radial-gradient(circle, rgba(23,23,19,.105) 0 12%, rgba(23,23,19,.05) 34%, transparent 68%);
+      mix-blend-mode: multiply;
+      transition: opacity .35s;
+    }
+    .intro {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: grid;
+      place-items: center;
+      background: var(--ink);
+      color: var(--paper);
+      animation: introOut 1s 2.25s cubic-bezier(.7,0,.2,1) forwards;
+    }
+    .intro-mark {
+      font-family: "Bodoni Moda", serif;
+      font-size: clamp(5rem, 18vw, 12rem);
+      line-height: 1;
+      letter-spacing: -.08em;
+      opacity: 0;
+      transform: scale(.84);
+      animation: inkMark 1.25s .15s ease forwards;
+    }
+    .intro::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--paper);
+      animation: inkSplash 1.4s .45s cubic-bezier(.2,.8,.2,1) forwards;
+    }
+    @keyframes inkMark { to { opacity: 1; transform: scale(1); } }
+    @keyframes inkSplash { 55% { width: 110vmax; height: 110vmax; } 100% { width: 130vmax; height: 130vmax; } }
+    @keyframes introOut { to { opacity: 0; visibility: hidden; } }
 
-/* hero */
-.hero{background:linear-gradient(115deg,var(--indigo),var(--violet) 55%,var(--pink));color:#fff;padding:64px 0 72px}
-.hero .wrap{display:grid;grid-template-columns:auto 1fr;gap:44px;align-items:center}
-.hero img{width:200px;height:200px;border-radius:50%;object-fit:cover;border:6px solid #fff;box-shadow:0 12px 40px rgba(30,27,58,.35)}
-.hero h1{font-size:clamp(2rem,5vw,3.4rem);font-weight:800;letter-spacing:-.02em}
-.hero .role{font-size:1.2rem;margin:8px 0 18px;color:#ffe4f1}
-.hero p{max-width:56ch;color:#f3eefe}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
-.chips a{background:rgba(255,255,255,.2);padding:6px 14px;border-radius:99px;text-decoration:none;font-size:.9rem;font-weight:500}
-.chips a:hover{background:#fff;color:var(--violet)}
+    .shell { min-height: 100vh; }
+    .nav {
+      height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: min(1400px, calc(100% - 64px));
+      margin: 0 auto;
+      border-bottom: 1px solid var(--line);
+      position: relative;
+      z-index: 20;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: -.02em;
+    }
+    .brand-mark {
+      width: 31px;
+      height: 31px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--ink);
+      border-radius: 50%;
+      font-family: "Bodoni Moda", serif;
+      font-size: 14px;
+    }
+    .nav-links { display: flex; align-items: center; gap: 29px; }
+    .nav-links a {
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .13em;
+    }
+    .nav-links a:hover { color: var(--red); }
+    .menu { display: none; border: 0; background: none; font-size: 24px; }
 
-section{padding:56px 0 8px}
-h2{font-size:1.7rem;margin-bottom:22px;display:flex;align-items:center;gap:12px}
-h2::before{content:"";width:6px;height:26px;border-radius:3px;background:var(--c,var(--indigo))}
+    .hero {
+      min-height: calc(100vh - 78px);
+      position: relative;
+      display: grid;
+      grid-template-columns: 46% 54%;
+      align-items: center;
+      width: min(1400px, calc(100% - 64px));
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .hero-copy { position: relative; z-index: 8; padding: 70px 0 90px; }
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 24px;
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .2em;
+    }
+    .eyebrow::before { content: ""; width: 40px; height: 1px; background: var(--ink); }
+    .hero h1 {
+      position: relative;
+      z-index: 9;
+      max-width: 680px;
+      margin: 0;
+      font-family: "Bodoni Moda", serif;
+      font-size: clamp(58px, 7.2vw, 112px);
+      line-height: .82;
+      letter-spacing: -.065em;
+    }
+    .hero h1 span {
+      display: block;
+      color: transparent;
+      -webkit-text-stroke: 1.5px var(--ink);
+      font-family: "Italiana", serif;
+      font-weight: 400;
+      margin-top: 17px;
+    }
+    .hero-role {
+      margin: 32px 0 12px;
+      font-family: "Bodoni Moda", serif;
+      font-size: clamp(22px, 2.2vw, 34px);
+      line-height: 1.15;
+    }
+    .hero-role em { color: var(--red); font-style: italic; }
+    .hero-summary { max-width: 560px; color: rgba(23,23,19,.67); line-height: 1.75; font-size: 16px; }
+    .hero-actions { display: flex; gap: 13px; margin-top: 30px; }
+    .button {
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      padding: 0 22px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      transition: .25s ease;
+    }
+    .button.fill { background: var(--ink); color: var(--paper); }
+    .button:hover { transform: translateY(-3px); background: var(--red); border-color: var(--red); color: white; }
 
-/* skills */
-.skills{display:grid;gap:14px}
-.skill-row{display:grid;grid-template-columns:150px 1fr;gap:14px;align-items:start}
-.skill-row dt{font-weight:700;color:var(--c);padding-top:4px}
-.skill-row dd{display:flex;flex-wrap:wrap;gap:8px;margin:0}
-.tag{background:color-mix(in srgb,var(--c) 12%,white);color:var(--c);font-weight:700;font-size:.85rem;padding:4px 12px;border-radius:99px}
+    .hero-art {
+      position: absolute;
+      right: -2%;
+      bottom: 0;
+      width: 58%;
+      height: 92%;
+      z-index: 3;
+    }
+    .giant-name {
+      position: absolute;
+      right: -22px;
+      top: 7%;
+      z-index: 1;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-family: "Bodoni Moda", serif;
+      font-size: clamp(70px, 9vw, 136px);
+      line-height: .72;
+      letter-spacing: -.08em;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(23,23,19,.16);
+      white-space: nowrap;
+    }
+    .portrait {
+      position: absolute;
+      right: 9%;
+      bottom: 0;
+      z-index: 5;
+      width: 66%;
+      height: 80%;
+      border-radius: 48% 48% 8px 8px;
+      background: var(--blue);
+      border: 1px solid rgba(23,23,19,.16);
+      box-shadow: 20px 20px 0 rgba(31,78,121,.13);
+      overflow: hidden;
+    }
+    .portrait img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: 50% 25%;
+    }
+    .portrait::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background: linear-gradient(145deg, rgba(31,78,121,.08), transparent 52%, rgba(190,74,53,.08));
+    }
+    .portrait::after {
+      content: none;
+    }
+    .seal {
+      position: absolute;
+      z-index: 7;
+      right: 2%;
+      top: 22%;
+      width: 105px;
+      height: 105px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--red);
+      color: white;
+      border: 7px double rgba(255,255,255,.75);
+      font-family: "Bodoni Moda", serif;
+      font-size: 14px;
+      text-align: center;
+      transform: rotate(9deg);
+    }
 
-/* projects */
-.feature{background:#fff;border:1px solid var(--line);border-left:6px solid var(--pink);border-radius:14px;padding:28px;margin-bottom:22px}
-.feature h3{font-size:1.4rem}
-.feature .sub{color:var(--pink);font-weight:700;margin:4px 0 12px}
-.feature ul{padding-left:20px;display:grid;gap:6px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px}
-.proj{background:color-mix(in srgb,var(--c) 6%,white);border-left:5px solid var(--c);border-radius:10px;padding:18px 20px}
-.proj h3{font-size:1.05rem}
-.proj .sub{font-size:.88rem;color:var(--muted);margin-bottom:8px}
-.proj .tech{font-size:.8rem;font-weight:700;color:var(--c);margin-bottom:8px}
-.proj p{font-size:.93rem}
-.tech{margin-top:14px;display:flex;flex-wrap:wrap;gap:6px}
-.feature .tech span{background:#fdf0f7;color:var(--pink);font-weight:700;font-size:.8rem;padding:3px 10px;border-radius:99px}
+    .section {
+      border-top: 1px solid var(--line);
+      width: min(1400px, calc(100% - 64px));
+      margin: 0 auto;
+      padding: 110px 0;
+    }
+    .section-head {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      align-items: end;
+      margin-bottom: 55px;
+    }
+    .section-number {
+      font-family: "Bodoni Moda", serif;
+      font-size: 13px;
+      color: var(--red);
+    }
+    .section-title {
+      margin: 0;
+      font-family: "Bodoni Moda", serif;
+      font-size: clamp(50px, 7vw, 94px);
+      line-height: .92;
+      letter-spacing: -.06em;
+    }
 
-/* education */
-.edu{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
-.edu div{border-top:4px solid var(--c);background:#fff;padding:14px 16px;border-radius:0 0 10px 10px;border-left:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
-.edu strong{display:block;font-family:'Sora',sans-serif;font-size:1.5rem;color:var(--c)}
+    .featured {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      min-height: 510px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.12);
+    }
+    .featured-copy { padding: clamp(38px, 6vw, 78px); display: flex; flex-direction: column; justify-content: center; }
+    .project-kicker { text-transform: uppercase; letter-spacing: .17em; font-size: 11px; font-weight: 700; color: var(--red); }
+    .featured h3 { margin: 15px 0 8px; font-family: "Bodoni Moda", serif; font-size: clamp(42px, 5vw, 72px); line-height: .92; }
+    .featured-sub { font-family: "Italiana", serif; font-size: 22px; color: rgba(23,23,19,.62); }
+    .featured ul { margin: 28px 0; padding-left: 18px; line-height: 1.75; color: rgba(23,23,19,.75); }
+    .featured-art {
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.13), transparent),
+        var(--olive);
+    }
+    .featured-art::before {
+      content: "A";
+      position: absolute;
+      right: -5%;
+      bottom: -20%;
+      font-family: "Bodoni Moda", serif;
+      font-size: 430px;
+      line-height: 1;
+      color: rgba(239,232,220,.12);
+    }
+    .book-stack { position: absolute; inset: 11% 12%; display: flex; align-items: center; justify-content: center; perspective: 900px; }
+    .book {
+      position: absolute;
+      width: 58%;
+      height: 70%;
+      border-radius: 4px 13px 13px 4px;
+      box-shadow: -16px 18px 26px rgba(23,23,19,.22);
+      padding: 35px 28px;
+      font-family: "Bodoni Moda", serif;
+      color: #eee5d5;
+      transform-origin: 50% 100%;
+      transition: .5s ease;
+    }
+    .book.one { background: #1d2b30; transform: rotate(-8deg) translateX(-18%); }
+    .book.two { background: #a54a38; transform: rotate(3deg) translateX(12%); }
+    .book strong { display: block; margin-top: 50px; font-size: clamp(24px, 3vw, 42px); line-height: 1; }
+    .book small { text-transform: uppercase; letter-spacing: .2em; }
 
-.two{display:grid;grid-template-columns:1fr 1fr;gap:40px}
-footer{margin-top:64px;background:var(--ink);color:#d9d6ee;padding:36px 0;text-align:center}
-footer a{color:#fff;font-weight:700}
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+    .project-card {
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid var(--line);
+      padding: 30px;
+      background: rgba(255,255,255,.09);
+      transition: .35s ease;
+    }
+    .project-card:hover { transform: translateY(-8px); background: var(--ink); color: var(--paper); }
+    .project-card h3 { margin: 15px 0 8px; font-family: "Bodoni Moda", serif; font-size: 31px; }
+    .project-card p { margin: 0; color: rgba(23,23,19,.62); line-height: 1.6; }
+    .project-card:hover p { color: rgba(239,232,220,.72); }
+    .project-card .tech { margin-top: 20px; font-size: 11px; text-transform: uppercase; letter-spacing: .11em; color: var(--red); }
+    .project-card:hover .tech { color: #d6a58d; }
 
-@media(max-width:720px){
-  .hero .wrap{grid-template-columns:1fr;text-align:center;justify-items:center}
-  .chips{justify-content:center}
-  .skill-row{grid-template-columns:1fr;gap:6px}
-  .two{grid-template-columns:1fr}
-  nav ul{display:none}
-}
-</style>
+    .skills-layout { display: grid; grid-template-columns: .8fr 1.2fr; gap: 70px; }
+    .letter {
+      min-height: 440px;
+      position: relative;
+      background: #e2d7c2;
+      border: 1px solid rgba(23,23,19,.12);
+      padding: 45px;
+      box-shadow: 12px 14px 0 rgba(23,23,19,.06);
+    }
+    .letter::before {
+      content: "";
+      position: absolute;
+      right: 28px;
+      top: 28px;
+      width: 55px;
+      height: 72px;
+      border: 1px solid rgba(23,23,19,.25);
+      background: repeating-linear-gradient(0deg, transparent 0 8px, rgba(23,23,19,.08) 8px 9px);
+    }
+    .letter h3 { font-family: "Bodoni Moda", serif; font-size: 38px; margin: 5px 0 28px; }
+    .typed { max-width: 410px; min-height: 160px; font-family: "DM Sans", sans-serif; line-height: 1.9; color: rgba(23,23,19,.72); }
+    .typed::after { content: "|"; animation: blink .75s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .skill-list { border-top: 1px solid var(--line); }
+    .skill-row {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 28px;
+      padding: 19px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .skill-row dt { font-family: "Bodoni Moda", serif; font-size: 20px; }
+    .skill-row dd { margin: 0; display: flex; flex-wrap: wrap; gap: 7px; }
+    .tag { border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; font-size: 12px; }
+
+    .education-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+    .education-card { min-height: 190px; padding: 28px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .education-card strong { display: block; font-family: "Bodoni Moda", serif; font-size: 48px; color: var(--red); }
+    .education-card p { margin: 18px 0 0; line-height: 1.5; }
+
+    .bottom-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+    .bottom-card { min-height: 220px; background: var(--paper); padding: 35px; }
+    .bottom-card h3 { font-family: "Bodoni Moda", serif; font-size: 28px; margin: 0 0 18px; }
+    .bottom-card p { color: rgba(23,23,19,.68); line-height: 1.75; }
+
+    .contact {
+      width: 100%;
+      background: var(--ink);
+      color: var(--paper);
+      padding: 100px max(32px, calc((100% - 1400px) / 2));
+    }
+    .contact-inner { display: grid; grid-template-columns: 1fr auto; align-items: end; }
+    .contact h2 { margin: 0; font-family: "Bodoni Moda", serif; font-size: clamp(64px, 10vw, 150px); line-height: .78; letter-spacing: -.07em; }
+    .contact h2 span { display: block; color: transparent; -webkit-text-stroke: 1px var(--paper); }
+    .contact-links { display: grid; gap: 12px; min-width: 300px; }
+    .contact-links a { text-decoration: none; border-bottom: 1px solid rgba(239,232,220,.18); padding: 10px 0; }
+    .contact-links a:hover { color: #d6a58d; }
+    body:not([data-route="contact"]) .contact { display: none; }
+
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity .8s ease, transform .8s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    body.route-mode .hero { display: none; }
+    body.route-mode main { min-height: calc(100vh - 78px); }
+    body.route-mode main .section { display: none; }
+    body.route-mode main .section.route-active { display: block; }
+    body.route-mode .nav { margin-bottom: 0; }
+    body.route-mode[data-route="contact"] .contact { min-height: 100vh; display: grid; align-items: center; }
+    body.route-mode[data-route="contact"] .nav { position: absolute; color: var(--paper); border-color: rgba(239,232,220,.18); }
+    body.route-mode[data-route="contact"] .brand-mark { border-color: var(--paper); }
+    body.route-mode[data-route="contact"] .nav-links a:hover { color: #d6a58d; }
+
+    @media (max-width: 980px) {
+      .nav, .hero, .section { width: min(100% - 40px, 1400px); }
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        position: absolute;
+        top: 68px;
+        right: 0;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 18px;
+        width: 220px;
+        padding: 22px;
+        background: var(--paper);
+        border: 1px solid var(--line);
+      }
+      .menu { display: block; }
+      .hero { grid-template-columns: 1fr; min-height: 760px; }
+      .hero-copy { padding-top: 50px; align-self: start; }
+      .hero-art { right: -5%; width: 55%; height: 66%; opacity: .9; }
+      .portrait { width: 74%; right: 5%; }
+      .featured { grid-template-columns: 1fr; }
+      .featured-art { min-height: 430px; }
+      .project-grid { grid-template-columns: repeat(2, 1fr); }
+      .skills-layout { grid-template-columns: 1fr; }
+      .education-grid { grid-template-columns: repeat(2, 1fr); }
+      .bottom-grid { grid-template-columns: 1fr; }
+      .contact-inner { grid-template-columns: 1fr; gap: 55px; }
+    }
+    @media (max-width: 620px) {
+      .nav, .hero, .section { width: calc(100% - 32px); }
+      .nav { height: 68px; }
+      .hero { min-height: 720px; }
+      .hero-copy { padding: 40px 0 0; }
+      .hero h1 { font-size: clamp(51px, 16vw, 78px); }
+      .hero-summary { max-width: 92%; }
+      .hero-art { width: 73%; height: 52%; right: -12%; bottom: 0; }
+      .portrait { width: 82%; height: 82%; opacity: .88; }
+      .seal { width: 78px; height: 78px; font-size: 11px; }
+      .giant-name { display: none; }
+      .hero-actions { flex-wrap: wrap; }
+      .section { padding: 75px 0; }
+      .section-head { grid-template-columns: 55px 1fr; margin-bottom: 35px; }
+      .section-title { font-size: 52px; }
+      .featured-copy { padding: 32px 24px; }
+      .featured ul { font-size: 14px; }
+      .featured-art { min-height: 340px; }
+      .project-grid { grid-template-columns: 1fr; }
+      .skill-row { grid-template-columns: 1fr; gap: 10px; }
+      .letter { min-height: 390px; padding: 32px 24px; }
+      .education-grid { grid-template-columns: 1fr; }
+      .education-card { min-height: 160px; }
+      .contact { padding-top: 75px; padding-bottom: 75px; }
+      .contact h2 { font-size: 64px; line-height: .88; }
+      .contact-links { min-width: 0; }
+    }
+    @media (pointer: coarse) { .inkspot { display: none; } }
+  </style>
 </head>
 <body>
+  <div class="intro" aria-hidden="true"><div class="intro-mark">TS</div></div>
+  <div class="inkspot" aria-hidden="true"></div>
 
-<nav>
-  <div class="wrap">
-    <b>T. Sivakumar</b>
-    <ul>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#education">Education</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
+  <div class="shell">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="/" data-route="/"><span class="brand-mark">TS</span><span>Tuburu Sivakumar</span></a>
+      <button class="menu" type="button" aria-label="Toggle menu" aria-expanded="false">☰</button>
+      <div class="nav-links">
+        <a href="/" data-route="/">Home</a>
+        <a href="/skills" data-route="/skills">Skills</a>
+        <a href="/projects" data-route="/projects">Projects</a>
+        <a href="/education" data-route="/education">Education</a>
+        <a href="/contact" data-route="/contact">Contact</a>
+      </div>
+    </nav>
+
+    <header class="hero" id="home">
+      <div class="hero-copy">
+        <p class="eyebrow">Frontend / Web developer / React JS</p>
+        <h1>Tuburu<span>Sivakumar</span></h1>
+        <p class="hero-role">Web apps with <em>AI that helps</em>, and people who decide.</p>
+        <p class="hero-summary">Fresher building API-driven React apps, like VocaTube, a voice-controlled YouTube platform. I also work with Python, Flask and PostgreSQL.</p>
+        <div class="hero-actions">
+          <a class="button fill" href="/projects" data-route="/projects">Explore work <span>↘</span></a>
+          <a class="button" href="/contact" data-route="/contact">Let's talk</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="giant-name">Sivakumar</div>
+        <div class="portrait">
+          <img src="siva_image_2.png" alt="Tuburu Sivakumar">
+        </div>
+        <div class="seal">Open to<br>work</div>
+      </div>
+    </header>
+
+    <main>
+      <section class="section" id="projects" data-page="projects">
+        <div class="section-head reveal">
+          <div class="section-number">01 / 04</div>
+          <h2 class="section-title">Projects.</h2>
+        </div>
+        <article class="featured reveal">
+          <div class="featured-copy">
+            <div class="project-kicker">Featured project</div>
+            <h3>Aarogya Drishti</h3>
+            <div class="featured-sub">AI-assisted oral screening and healthcare referral platform</div>
+            <ul>
+              <li>Supports oral screening for remote and underserved communities.</li>
+              <li>Role-based workflows for Health Workers, Medical Officers, Specialists, Navigators and admins.</li>
+              <li>AI-assisted risk flagging and quality checks, with every result reviewed by medical officers.</li>
+              <li>Patient records, screening history, referrals, follow-ups and dashboards with PostgreSQL.</li>
+            </ul>
+            <div class="project-kicker">React JS · Express · PostgreSQL · Python · REST APIs</div>
+          </div>
+          <div class="featured-art" aria-hidden="true">
+            <div class="book-stack">
+              <div class="book one"><small>Health / AI</small><strong>Aarogya</strong></div>
+              <div class="book two"><small>Screen / Review</small><strong>Drishti</strong></div>
+            </div>
+          </div>
+        </article>
+
+        <div class="project-grid">
+          <article class="project-card reveal"><div><div class="project-kicker">Voice / API</div><h3>VocaTube</h3><p>Voice-controlled YouTube platform with search, history, favorites, notes and focus mode.</p></div><div class="tech">React JS · Web Speech API · Local Storage</div></article>
+          <article class="project-card reveal"><div><div class="project-kicker">API / Cinema</div><h3>Movie API App</h3><p>Searches an external movie API and renders details dynamically.</p></div><div class="tech">React JS · REST API · CSS</div></article>
+          <article class="project-card reveal"><div><div class="project-kicker">Finance</div><h3>Money Management</h3><p>A clear interface for organizing and viewing personal financial information.</p></div><div class="tech">React JS · JavaScript · CSS</div></article>
+          <article class="project-card reveal"><div><div class="project-kicker">Backend</div><h3>Student Management</h3><p>Flask application with PostgreSQL to add, retrieve and manage student records.</p></div><div class="tech">Python · Flask · PostgreSQL · SQL</div></article>
+          <article class="project-card reveal"><div><div class="project-kicker">Registration</div><h3>Flask Registration</h3><p>User registration form processed with Flask and stored in MongoDB.</p></div><div class="tech">Python · Flask · MongoDB</div></article>
+          <article class="project-card reveal"><div><div class="project-kicker">Deployment</div><h3>DeployFlow</h3><p>Frontend app exploring reusable components and web development workflows.</p></div><div class="tech">React JS · JavaScript · HTML · CSS</div></article>
+        </div>
+      </section>
+
+      <section class="section" id="skills" data-page="skills">
+        <div class="section-head reveal">
+          <div class="section-number">02 / 04</div>
+          <h2 class="section-title">Skills.</h2>
+        </div>
+        <div class="skills-layout">
+          <div class="letter reveal">
+            <h3>A letter to tomorrow</h3>
+            <div class="typed" data-text="Dear tomorrow,&#10;&#10;I will keep building reliable web applications, learning continuously and applying my skills to meaningful real-world problems."></div>
+          </div>
+          <dl class="skill-list reveal">
+            <div class="skill-row"><dt>Languages</dt><dd><span class="tag">Python</span><span class="tag">JavaScript</span></dd></div>
+            <div class="skill-row"><dt>Frontend</dt><dd><span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">React.js</span><span class="tag">Responsive Design</span><span class="tag">DOM</span></dd></div>
+            <div class="skill-row"><dt>Backend</dt><dd><span class="tag">Flask</span><span class="tag">Node.js</span><span class="tag">Express.js</span><span class="tag">REST APIs</span></dd></div>
+            <div class="skill-row"><dt>Databases</dt><dd><span class="tag">PostgreSQL</span><span class="tag">SQL</span><span class="tag">MongoDB</span><span class="tag">CRUD</span></dd></div>
+            <div class="skill-row"><dt>Tools</dt><dd><span class="tag">VS Code</span><span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">Postman</span><span class="tag">pgAdmin</span></dd></div>
+            <div class="skill-row"><dt>Core</dt><dd><span class="tag">OOP</span><span class="tag">Data Structures</span><span class="tag">RBAC</span><span class="tag">AI Integration</span></dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="section" id="education" data-page="education">
+        <div class="section-head reveal">
+          <div class="section-number">03 / 04</div>
+          <h2 class="section-title">Education.</h2>
+        </div>
+        <div class="education-grid reveal">
+          <div class="education-card"><strong>2022</strong><p>B.A. · CGPA 6.9<br>Mrs. AVN College, Visakhapatnam</p></div>
+          <div class="education-card"><strong>2018</strong><p>D.El.Ed.<br>77%</p></div>
+          <div class="education-card"><strong>2016</strong><p>Intermediate<br>732 marks</p></div>
+          <div class="education-card"><strong>2014</strong><p>SSC (10th)<br>CGPA 7.2</p></div>
+        </div>
+      </section>
+
+      <section class="section" data-page="more">
+        <div class="section-head reveal">
+          <div class="section-number">04 / 04</div>
+          <h2 class="section-title">More about me.</h2>
+        </div>
+        <div class="bottom-grid reveal">
+          <article class="bottom-card"><h3>Training.</h3><p><b>Full Stack Python &amp; AI Development Training.</b><br>Full Stack Web Development, React.js, Python, Flask, SQL &amp; Databases, AI Fundamentals &amp; Tools and project-based learning.</p></article>
+          <article class="bottom-card"><h3>Experience.</h3><p><b>Jr Trainee</b> · Aarodhan, Koyyuru (Paderu ITDA), 6 months.<br><br><b>Jr Trainee</b> · Datapro Aarohan, Python Full Stack and AI.</p></article>
+          <article class="bottom-card"><h3>Strengths.</h3><p>Analytical thinking, problem-solving and debugging, willingness to learn, adaptability, team collaboration, self-learning and consistency.</p></article>
+        </div>
+      </section>
+    </main>
   </div>
-</nav>
 
-<header class="hero">
-  <div class="wrap">
-    <img src="profile.png" alt="Tuburu Sivakumar">
-    <div>
-      <h1>Tuburu Sivakumar</h1>
-      <p class="role">Software Developer | Full Stack Web Developer</p>
-      <p>I build interactive web apps with React.js, Python, Flask, Node.js and PostgreSQL. My strongest project is a healthcare platform where AI flags risks and doctors make the final call.</p>
-      <div class="chips">
-        <a href="tel:+916301151480">+91 6301151480</a>
-        <a href="mailto:sivatuburu@gmail.com">sivatuburu@gmail.com</a>
-        <a href="#contact">Andhra Pradesh, India</a>
+  <footer class="contact" id="contact">
+    <div class="contact-inner">
+      <h2>Let's build<span>something.</span></h2>
+      <div class="contact-links">
+        <a href="mailto:sivatuburu@gmail.com">Email · sivatuburu@gmail.com</a>
+        <a href="tel:+916301151480">Call · +91 6301151480</a>
+        <a href="https://github.com/sivatuburu-bit" target="_blank" rel="noreferrer">GitHub ↗</a>
+        <a href="https://www.linkedin.com/in/sivakumar-tuburu" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+        <a href="https://www.naukri.com/mnjuser/homepage" target="_blank" rel="noreferrer">Naukri profile ↗</a>
       </div>
     </div>
-  </div>
-</header>
+  </footer>
 
-<main class="wrap">
+  <script>
+    const knownRoutes = ["/", "/skills", "/projects", "/education", "/contact"];
 
-<section id="about">
-  <h2>Profile</h2>
-  <p style="max-width:75ch">Software Developer with hands-on project experience building web applications using React.js, JavaScript, Python, Flask, Node.js, Express.js and databases. I work on frontend development, API integration, backend logic and database connectivity. My projects cover healthcare technology, AI-assisted screening, video and movie apps, and data-driven web apps. I am currently strengthening Python, backend development and AI/ML fundamentals.</p>
-</section>
+    function renderRoute(url = window.location.pathname) {
+      const pathname = url.replace(/\/+$/, "") || "/";
+      const route = knownRoutes.includes(pathname) ? pathname : "/";
 
-<section id="skills">
-  <h2 style="--c:var(--violet)">Skills</h2>
-  <dl class="skills">
-    <div class="skill-row" style="--c:var(--indigo)"><dt>Languages</dt><dd><span class="tag">Python</span><span class="tag">JavaScript</span></dd></div>
-    <div class="skill-row" style="--c:var(--violet)"><dt>Frontend</dt><dd><span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">React.js</span><span class="tag">DOM Manipulation</span><span class="tag">Responsive Design</span><span class="tag">Components &amp; State</span></dd></div>
-    <div class="skill-row" style="--c:var(--pink)"><dt>Backend</dt><dd><span class="tag">Flask</span><span class="tag">Node.js</span><span class="tag">Express.js</span><span class="tag">REST API Development</span><span class="tag">Routing</span><span class="tag">Form Processing</span></dd></div>
-    <div class="skill-row" style="--c:var(--orange)"><dt>Databases</dt><dd><span class="tag">PostgreSQL</span><span class="tag">SQL</span><span class="tag">MongoDB</span><span class="tag">CRUD Operations</span></dd></div>
-    <div class="skill-row" style="--c:var(--teal)"><dt>APIs &amp; Web</dt><dd><span class="tag">REST APIs</span><span class="tag">Fetch API</span><span class="tag">Async/Await</span><span class="tag">JSON</span><span class="tag">YouTube Data API</span></dd></div>
-    <div class="skill-row" style="--c:var(--blue)"><dt>Tools</dt><dd><span class="tag">VS Code</span><span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">Postman</span><span class="tag">pgAdmin</span></dd></div>
-    <div class="skill-row" style="--c:var(--green)"><dt>Core concepts</dt><dd><span class="tag">OOP</span><span class="tag">Data Structures</span><span class="tag">Authentication &amp; Authorization</span><span class="tag">Role-Based Access Control</span><span class="tag">Error Handling</span><span class="tag">AI Integration</span></dd></div>
-  </dl>
-</section>
+      document.body.classList.toggle("route-mode", route !== "/");
+      document.body.dataset.route = route === "/" ? "home" : route.slice(1);
 
-<section id="projects">
-  <h2 style="--c:var(--pink)">Projects</h2>
+      document.querySelectorAll("[data-page]").forEach((section) => {
+        section.classList.toggle("route-active", "/" + section.dataset.page === route);
+      });
 
-  <article class="feature">
-    <h3>Aarogya Drishti</h3>
-    <p class="sub">AI-assisted oral screening and healthcare referral platform</p>
-    <ul>
-      <li>Designed a healthcare app to support oral screening for remote and underserved communities.</li>
-      <li>Built patient registration and management, with role-based workflows for Health Workers, Medical Officers, Specialists, Navigators and admins.</li>
-      <li>Designed image screening with AI-assisted risk flagging and image quality checks. Medical officers review every AI result; it is not an automated diagnosis.</li>
-      <li>Worked on patient records, screening history, referrals, follow-ups, dashboards and backend APIs with PostgreSQL.</li>
-    </ul>
-    <div class="tech"><span>React.js</span><span>JavaScript</span><span>Express.js</span><span>PostgreSQL</span><span>Python</span><span>REST APIs</span></div>
-  </article>
+      document.querySelectorAll("[data-route]").forEach((link) => {
+        link.classList.toggle("active", link.dataset.route === route);
+        if (link.dataset.route === route) link.setAttribute("aria-current", "page");
+        else link.removeAttribute("aria-current");
+      });
 
-  <div class="grid">
-    <article class="proj" style="--c:var(--indigo)"><h3>DeployFlow</h3><p class="sub">Web development and deployment workflow</p><p class="tech">React.js, JavaScript, HTML, CSS</p><p>Frontend app on deployment workflow concepts, built from reusable components.</p></article>
-    <article class="proj" style="--c:var(--orange)"><h3>VocaTube</h3><p class="sub">YouTube video search and browsing app</p><p class="tech">React.js, YouTube Data API, Fetch, Async/Await</p><p>Video browsing with search, using async API calls and dynamic display.</p></article>
-    <article class="proj" style="--c:var(--teal)"><h3>Movie API Web App</h3><p class="sub">Movie search and information app</p><p class="tech">React.js, JavaScript, REST API, CSS</p><p>Fetches movie data from an external API and renders details dynamically.</p></article>
-    <article class="proj" style="--c:var(--blue)"><h3>Money Management App</h3><p class="sub">Personal finance tracking</p><p class="tech">React.js, JavaScript, HTML, CSS</p><p>Interface for organizing and viewing financial information.</p></article>
-    <article class="proj" style="--c:var(--green)"><h3>Student Management System</h3><p class="sub">Student data management web app</p><p class="tech">Python, Flask, PostgreSQL, SQL</p><p>Flask app with PostgreSQL to add, retrieve and manage student records.</p></article>
-    <article class="proj" style="--c:var(--violet)"><h3>Flask Registration App</h3><p class="sub">User registration and data storage</p><p class="tech">Python, Flask, MongoDB, HTML, CSS</p><p>Registration form processed with Flask and stored in MongoDB.</p></article>
-  </div>
-</section>
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }
 
-<section id="education">
-  <h2 style="--c:var(--orange)">Education</h2>
-  <div class="edu">
-    <div style="--c:var(--indigo)"><strong>2022</strong>B.A. &middot; CGPA 6.9</div>
-    <div style="--c:var(--pink)"><strong>2018</strong>D.El.Ed. &middot; 77%</div>
-    <div style="--c:var(--orange)"><strong>2016</strong>Intermediate &middot; 732 marks</div>
-    <div style="--c:var(--teal)"><strong>2014</strong>SSC (10th) &middot; CGPA 7.2</div>
-  </div>
-</section>
+    document.querySelectorAll("a[data-route]").forEach((link) => {
+      link.addEventListener("click", (event) => {
+        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        const route = link.dataset.route;
+        if (window.location.pathname !== route) history.pushState({ route }, "", route);
+        renderRoute(route);
+      });
+    });
 
-<section>
-  <div class="two">
-    <div>
-      <h2 style="--c:var(--teal)">Training</h2>
-      <p><b>Full Stack Python &amp; AI Development Training</b><br>Full Stack Web Development, React.js, Python, Flask, SQL &amp; Databases, AI Fundamentals &amp; Tools, project-based learning.</p>
-    </div>
-    <div>
-      <h2 style="--c:var(--blue)">Strengths</h2>
-      <p>Analytical thinking, problem-solving and debugging, willingness to learn, adaptability, team collaboration, self-learning and consistency.</p>
-    </div>
-  </div>
-</section>
+    window.addEventListener("popstate", () => renderRoute());
+    renderRoute();
 
-<section id="contact">
-  <h2 style="--c:var(--green)">Career objective</h2>
-  <p style="max-width:75ch">I want to build a career in software development by applying my skills and project experience to reliable web applications, contribute to real-world projects and grow as a developer.</p>
-</section>
-</main>
+    const inkspot = document.querySelector(".inkspot");
+    window.addEventListener("pointermove", (event) => {
+      inkspot.style.left = event.clientX + "px";
+      inkspot.style.top = event.clientY + "px";
+      inkspot.style.opacity = "1";
+    });
 
-<footer>
-  <p>Email <a href="mailto:sivatuburu@gmail.com">sivatuburu@gmail.com</a> &nbsp;|&nbsp; Call <a href="tel:+916301151480">+91 6301151480</a></p>
-</footer>
+    const menu = document.querySelector(".menu");
+    const navLinks = document.querySelector(".nav-links");
+    menu.addEventListener("click", () => {
+      const open = navLinks.classList.toggle("open");
+      menu.setAttribute("aria-expanded", String(open));
+    });
+    navLinks.addEventListener("click", () => {
+      navLinks.classList.remove("open");
+      menu.setAttribute("aria-expanded", "false");
+    });
+
+    const reveals = document.querySelectorAll(".reveal");
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: .12 });
+    reveals.forEach((item) => revealObserver.observe(item));
+
+    const typed = document.querySelector(".typed");
+    let typedStarted = false;
+    const typeObserver = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting || typedStarted) return;
+      typedStarted = true;
+      const text = typed.dataset.text.replace(/&#10;/g, "\n");
+      let index = 0;
+      const timer = setInterval(() => {
+        typed.textContent = text.slice(0, index++);
+        if (index > text.length) clearInterval(timer);
+      }, 32);
+    }, { threshold: .5 });
+    typeObserver.observe(typed);
+  </script>
 </body>
 </html>
